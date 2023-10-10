@@ -11,16 +11,35 @@ packer {
   }
 }
 
+variable "ami_id" {
+  type    = string
+}
+
+variable "instance_type" {
+  type    = string
+}
+
+variable "region" {
+  type    = string
+}
+
+variable "image_name" {
+  type  = string
+}
+
+variable "username" { }
+variable "os_version" { }
+
 source "amazon-ebs" "my_ubuntu_image" {
-  region        = "us-east-1"
-  source_ami    = "ami-053b0d53c279acc90"
-  instance_type = "t2.micro"
-  ssh_username  = "ubuntu"
-  ami_name      = "my_ubuntu_image_{{timestamp}}"
+  region        = "${var.region}"
+  source_ami    = "${var.ami_id}"
+  instance_type = "${var.instance_type}"
+  ssh_username  = "${var.username}"
+  ami_name      = "${var.image_name}_{{timestamp}}"
   tags = {
-    OS_Version = "Ubuntu"
+    OS_Version = "${var.os_version}"
     Release    = "Latest"
-    Name  = "Ubuntu_Packer"
+    Name  = "${var.image_name}"
     #Base_AMI_Name = "{{ .SourceAMIName }}"
     #Extra = "{{ .SourceAMITags.TagName }}"
   }

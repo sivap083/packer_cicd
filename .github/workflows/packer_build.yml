@@ -37,7 +37,7 @@ jobs:
         run: packer fmt .
 
       - name: Packer Build
-        run: packer build .
+        run: packer build --var-file=build.pkr.hcl .
 
       
       
