@@ -32,7 +32,10 @@ jobs:
       - name: Packer Init
         run: packer init .
 
-      - name: Packer Build - Branches
+      - name: Packer Format
+        run: packer fmt .
+
+      - name: Packer Build
         run: packer build .
 
       
