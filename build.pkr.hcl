@@ -53,8 +53,8 @@ build {
   name    = "my-first-build"
   sources = ["source.amazon-ebs.my_ubuntu_image"]
 
-  provisioner "ansible-local" {
-    playbook_file = "provision.yml"
+  provisioner "ansible" {
+    playbook_file = "provision.yaml"
   }
   #post-processor "vagrant" {}
   #post-processor "compress" {}
