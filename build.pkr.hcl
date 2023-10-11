@@ -8,27 +8,31 @@ packer {
       source  = "github.com/hashicorp/vagrant"
       version = "~> 1"
     }
+    ansible = {
+      source  = "github.com/hashicorp/ansible"
+      version = "~> 1"
+    }
   }
 }
 
 variable "ami_id" {
-  type    = string
+  type = string
 }
 
 variable "instance_type" {
-  type    = string
+  type = string
 }
 
 variable "region" {
-  type    = string
+  type = string
 }
 
 variable "image_name" {
-  type  = string
+  type = string
 }
 
-variable "username" { }
-variable "os_version" { }
+variable "username" {}
+variable "os_version" {}
 
 source "amazon-ebs" "my_ubuntu_image" {
   region        = "${var.region}"
@@ -39,18 +43,18 @@ source "amazon-ebs" "my_ubuntu_image" {
   tags = {
     OS_Version = "${var.os_version}"
     Release    = "Latest"
-    Name  = "${var.image_name}"
+    Name       = "${var.image_name}"
     #Base_AMI_Name = "{{ .SourceAMIName }}"
     #Extra = "{{ .SourceAMITags.TagName }}"
   }
 }
 
 build {
-  name   = "my-first-build"
+  name    = "my-first-build"
   sources = ["source.amazon-ebs.my_ubuntu_image"]
 
-  provisioner "shell" {
-    scripts = [ "script.sh" ]
+  provisioner "ansible-local" {
+    playbook_file = "provision.yml"
   }
   #post-processor "vagrant" {}
   #post-processor "compress" {}
