@@ -30,9 +30,9 @@
         - 443
       tags: ufw
 
-    - name: Enable UFW
-      command: ufw enable
-      stdin: 'y'
-      tags: ufw
+    #- name: Enable UFW
+    #  command: ufw enable
+    #  stdin: 'y'
+    #  tags: ufw
 
     
