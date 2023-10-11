@@ -30,7 +30,7 @@
         - 443
       tags: ufw
 
-    - name: Enable UFW (Uncomplicated Firewall)
+    - name: Enable UFW
       command: ufw enable
       stdin: 'y'
       tags: ufw
