@@ -23,14 +23,8 @@ variable "instance_type" {
   type = string
 }
 
-variable "region" {
-  type = string
-}
-
-variable "image_name" {
-  type = string
-}
-
+variable "region" {}
+variable "image_name" {}
 variable "username" {}
 variable "os_version" {}
 
@@ -50,7 +44,7 @@ source "amazon-ebs" "my_ubuntu_image" {
 }
 
 build {
-  name    = "my-first-build"
+  name    = "packer_build"
   sources = ["source.amazon-ebs.my_ubuntu_image"]
 
   provisioner "ansible" {
