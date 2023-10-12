@@ -33,6 +33,9 @@ source "amazon-ebs" "windows_image" {
   ami_name                = "${var.image_name}_{{timestamp}}"
   winrm_username          = "${var.username}"
   winrm_password          = "${var.winrm_password}"
+  winrm_port  = "5985"
+  winrm_insecure = true
+  winrm_timeout = "5m"
   ami_virtualization_type = "hvm"
   communicator  = "winrm"
   user_data_file = "bootstrap_win.txt"
