@@ -29,11 +29,12 @@ source "amazon-ebs" "windows_image" {
   region                  = "${var.region}"
   source_ami              = "${var.ami_id}"
   instance_type           = "${var.instance_type}"
-  ssh_username            = "${var.username}"
+  #ssh_username            = "${var.username}"
   ami_name                = "${var.image_name}_{{timestamp}}"
   winrm_username          = "${var.username}"
   winrm_password          = "${var.winrm_password}"
   ami_virtualization_type = "hvm"
+  communicator  = "winrm"
   tags = {
     OS_Version = "${var.os_version}"
     Release    = "Latest"
@@ -44,7 +45,7 @@ source "amazon-ebs" "windows_image" {
 }
 
 build {
-  name    = "packer_build"
+  name    = "windows-ami-build"
   sources = ["source.amazon-ebs.windows_image"]
 
   provisioner "ansible" {
