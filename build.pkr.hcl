@@ -35,6 +35,7 @@ source "amazon-ebs" "windows_image" {
   winrm_password          = "${var.winrm_password}"
   ami_virtualization_type = "hvm"
   communicator  = "winrm"
+  user_data_file = "bootstrap_win.txt"
   tags = {
     OS_Version = "${var.os_version}"
     Release    = "Latest"
