@@ -1,6 +1,6 @@
 <powershell>
 # Set administrator password
-net user Administrator windows2019
+net user Administrator Nikitha@2020
 wmic useraccount where "name='Administrator'" set PasswordExpires=FALSE
 
 # First, make sure WinRM can't be connected to
