@@ -24,9 +24,9 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Set up Packer
-        uses: hashicorp/setup-packer@v3
+        uses: hashicorp/setup-packer
         with:
-          packer-version: '1.8.6' 
+          #packer-version: '1.8.6' 
       
       - name: Packer Init
         run: packer init .
