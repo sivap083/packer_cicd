@@ -4,7 +4,7 @@ client_id       = "9bcd0c0e-f910-4224-abb6-85586c48aee3"
 client_secret   = "eo08Q~R1c.vjdjGKtI~kihdjRl43uOY-hm1MYanY"
 
 primary_location    = "eastus"
-image_name          = "pkr-demo"
+image_name          = "pkr-ubuntu"
 image_version       = "0.0.1"
 resource_group_name = "packer-demo"
 storage_account     = "packerdemo"
