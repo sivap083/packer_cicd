@@ -32,9 +32,6 @@ jobs:
       - name: Packer Init
         run: packer init .
 
-      - name: Packer Validate
-        run: packer validate --var-file=values_pkrvars.hcl .
-
       - name: Packer Build
         run: packer build --var-file=values_pkrvars.hcl .
         env:

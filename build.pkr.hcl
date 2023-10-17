@@ -1,8 +1,6 @@
 build {
   name = "packer-build"
-  sources = [
-    "source.azure-arm.windows"
-  ]
+  sources = ["source.azure-arm.windows"]
 
   #provisioner "powershell" {
     #script = "./install-software.ps1"
