@@ -1,3 +1,4 @@
+
 build {
   name = "packer-build"
   sources = [
