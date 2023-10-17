@@ -37,3 +37,6 @@ variable location {
 variable vm_size {
   type = string
 }
+
+variable "winrm_password" {}
+variable "image_offer" {}

@@ -1,11 +1,16 @@
 build {
   name = "packer-build"
   sources = [
-    "source.azure-arm.ubuntu"
+    "source.azure-arm.windows"
   ]
-  provisioner "shell" {
-    script       = "script.sh"
-}
+
+  #provisioner "powershell" {
+    #script = "./install-software.ps1"
+  #}
+  provisioner "windows-restart" {
+  }
+
+
 
 
   //post-processor "vagrant" {}
