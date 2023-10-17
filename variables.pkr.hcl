@@ -1,16 +1,3 @@
-variable subscription_id {
-  type        = string
-  description = "subscription_id from Azure account"
-}
-variable tenant_id {
-  type = string
-}
-variable client_id {
-  type = string
-}
-variable client_secret {
-  type = string
-}
 
 variable primary_location {
   type = string
