@@ -1,0 +1,31 @@
+Currently capegemini team is using the below tool/service to build the Golden Image.
+They are using GitLab as source code repository and CICD tool
+Harshicorp packer to build the golden images
+Harshicorp used to generate the vault token.
+They used to build the golden images in On-prem, AWS & Azure cloud
+
+Let’s explore the components involved in packer configuration file.
+Capegemini team is using packer.json file which contains the configuration details to build the golden images.
+Usually this packer has three stages
+-	Builders – Builders create machines and generate images from the target infrastructure
+-	Provisioners -- Provisioners are used to install software, configure settings, and make other changes to the image
+-	Post Processors – Used to upload the image to a local file server or other storage location and also use this stage to compress the image.
+
+Variables Block contains the user and password, CPU, memory, ISO file path in Vcentre 
+
+Important configuration files they mentioned in the call
+•	Initialboot.ps1
+•	Autoanttend.xml
+
+GITLab CICD
+•	Image
+•	Variables
+•	Before_script
+•	after_script
+•	stages
+o	validate
+o	build
+•	validate_packer
+o	stage: validate
+o	tags:
+o	script:
