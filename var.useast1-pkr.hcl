@@ -4,4 +4,4 @@ region  = "us-east-1"
 image_name  = "windows-2019base"
 username = "Administrator"
 os_version = "Windows-2019"
-winrm_password = "Packerwindows@2023"
+winrm_password = var.WINRM_PASSWORD
