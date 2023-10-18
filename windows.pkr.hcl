@@ -47,7 +47,7 @@ source "amazon-ebs" "windows_image" {
 
 build {
   name    = "windows-ami-build"
-  sources = ["source.amazon-ebs.windows_image"]
+  builders = ["source.amazon-ebs.windows_image"]
 
   provisioner "powershell" {
     environment_vars = ["DEVOPS_LIFE_IMPROVER=PACKER"]
