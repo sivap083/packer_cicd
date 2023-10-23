@@ -1,27 +1,36 @@
-# This is a basic workflow to help you get started with Actions
 
 name: Build Packer Image
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
-  #push:
-  #  branches: [ "master" ]
+  push:
+    branches: [ "feature/aws-linux-hcp" ]
   #pull_request:
   #  branches: [ "master" ]
   workflow_dispatch:
 
+env:
+  HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
+  HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
+  HCP_PROJECT_ID: ${{ secrets.HCP_PROJECT_ID }}
+  HCP_ORGANIZATION_ID: ${{ secrets.HCP_ORGANIZATION_ID }}
+  HCP_BUCKET_NAME: "packer-aws"
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+      
+      - name: Set up Packer
+        uses: hashicorp/setup-packer@v1
+        with:
+          version: 1.7.2
         
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -33,11 +42,17 @@ jobs:
       - name: Packer Init
         run: packer init .
 
-      - name: Packer Format
-        run: packer fmt .
+      - name: Packer Validate
+        run: packer validate .
 
       - name: Packer Build
         run: packer build --var-file=var.useast1-pkr.hcl .
+
+      - name: Publish to Packer Registry
+        run: |
+          packer registry publish -var "aws_region=us-east-1" \
+            -var "aws_access_key=$AWS_ACCESS_KEY" -var "aws_secret_key=$AWS_SECRET_KEY" \
+            --var-file=var.useast1-pkr.hcl
 
       
       

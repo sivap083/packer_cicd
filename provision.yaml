@@ -20,19 +20,4 @@
         state: started
       tags: nginx
 
-    - name: Allow incoming traffic on ports 22, 80, and 443
-      ufw:
-        rule: allow
-        port: "{{ item }}"
-      with_items:
-        - 22
-        - 80
-        - 443
-      tags: ufw
-
-    #- name: Enable UFW
-    #  command: ufw enable
-    #  stdin: 'y'
-    #  tags: ufw
-
     
