@@ -44,7 +44,7 @@ jobs:
         run: packer init .
 
       - name: Packer Validate
-        run: packer validate .
+        run: packer validate --var-file=var.useast1-pkr.hcl .
 
       - name: Packer Build
         run: packer build --var-file=var.useast1-pkr.hcl .
