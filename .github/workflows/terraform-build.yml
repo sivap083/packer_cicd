@@ -33,8 +33,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+      #- name: Setup Terraform
+      #  uses: hashicorp/setup-terraform@v1
         
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -45,9 +45,6 @@ jobs:
       
       - name: Terraform Init
         run: terraform init
-
-      - name: Packer Validate
-        run: packer validate --var-file=var.useast1-pkr.hcl .
 
       - name: Terraform Plan
         run: terraform plan -input=false
