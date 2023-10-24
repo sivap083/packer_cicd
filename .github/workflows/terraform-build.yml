@@ -1,11 +1,11 @@
 
-name: Build Packer Image
+name: Terraform
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
-    branches: [ "feature/aws-linux-hcp" ]
+    branches: [ "feature/hcp-terraform" ]
   #pull_request:
   #  branches: [ "master" ]
   workflow_dispatch:
@@ -19,19 +19,22 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
+  terraform:
+    name: "Terraform"
     runs-on: ubuntu-latest
+    environment: development
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    # Checkout the repository to the GitHub Actions runner
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
       
-      - name: Set up Packer
-        uses: hashicorp/setup-packer@main
-        id: setup
-        with:
-          version: "1.8.6"
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
         
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -40,20 +43,17 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
-      - name: Packer Init
-        run: packer init .
+      - name: Terraform Init
+        run: terraform init
 
       - name: Packer Validate
         run: packer validate --var-file=var.useast1-pkr.hcl .
 
-      - name: Packer Build
-        run: packer build --var-file=var.useast1-pkr.hcl .
+      - name: Terraform Plan
+        run: terraform plan -input=false
 
-      - name: Publish to Packer Registry
-        run: |
-          packer registry publish -var "aws_region=us-east-1" \
-            -var "aws_access_key=$AWS_ACCESS_KEY" -var "aws_secret_key=$AWS_SECRET_KEY" \
-            --var-file=var.useast1-pkr.hcl
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false
 
       
       
