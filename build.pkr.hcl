@@ -12,14 +12,6 @@ packer {
   }
 }
 
-variable "ami_id" {}
-variable "instance_type" {}
-variable "region" {}
-variable "image_name" {}
-variable "username" {}
-variable "os_version" {}
-variable "version" {}
-
 source "amazon-ebs" "my_ubuntu_image" {
   region        = "${var.region}"
   source_ami    = "${var.ami_id}"
@@ -44,20 +36,24 @@ This is an image for AWS Linux Machine.
       "owner"          = "platform-team"
       "os"             = "Linux",
       "ubuntu-version" = "22.04-LTS"
-      "app" = "nginx"
+      "app"            = "nginx"
     }
   }
 
   sources = ["source.amazon-ebs.my_ubuntu_image"]
 
   provisioner "shell" {
-    scripts = [ "script.sh" ]
+    scripts = ["script.sh"]
   }
-  #provisioner "ansible" {
-  #  playbook_file = "provision.yaml"
+  post-processor "manifest" {
+    output     = "packer_manifest.json"
+    strip_path = true
+    custom_data = {
+      iteration_id = packer.iterationID
+    }
+  }
+
+  #post-processor "hcp" {
+  #  channel = "development"
   #}
-
-  #post-processor "vagrant" {}
-  #post-processor "compress" {}
-
 }
