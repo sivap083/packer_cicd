@@ -4,8 +4,8 @@ name: Terraform
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
-  push:
-    branches: [ "feature/hcp-terraform" ]
+  #push:
+  #  branches: [ "feature/hcp-terraform" ]
   #pull_request:
   #  branches: [ "master" ]
   workflow_dispatch:
@@ -47,7 +47,7 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -input=false
+        run: terraform plan -input=true      
 
       - name: Terraform Apply
         run: terraform apply -auto-approve -input=true
