@@ -15,11 +15,12 @@ env:
   HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
   HCP_PROJECT_ID: ${{ secrets.HCP_PROJECT_ID }}
   HCP_ORGANIZATION_ID: ${{ secrets.HCP_ORGANIZATION_ID }}
-  HCP_BUCKET_NAME: "packer-aws"
+  HCP_BUCKET_NAME: "learn-packer-github-actions"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
+  build-image:
+    name: Build
     runs-on: ubuntu-latest
     outputs:
       iteration_id: ${{ steps.hcp.outputs.iteration_id }}
@@ -28,13 +29,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      
-      - name: Set up Packer
-        uses: hashicorp/setup-packer@main
-        id: setup
-        with:
-          version: "1.8.6"
-        
+              
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:

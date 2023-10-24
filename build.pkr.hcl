@@ -26,7 +26,7 @@ source "amazon-ebs" "my_ubuntu_image" {
 }
 
 build {
-  name = "packer_build"
+  # HCP Packer settings
   hcp_packer_registry {
     bucket_name = "packer-aws"
     description = <<EOT
@@ -40,7 +40,9 @@ This is an image for AWS Linux Machine.
     }
   }
 
-  sources = ["source.amazon-ebs.my_ubuntu_image"]
+  sources = [
+    "source.amazon-ebs.my_ubuntu_image",
+  ]
 
   provisioner "shell" {
     scripts = ["script.sh"]
