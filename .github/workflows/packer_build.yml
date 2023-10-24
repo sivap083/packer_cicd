@@ -49,11 +49,11 @@ jobs:
       - name: Packer Build
         run: packer build --var-file=var.useast1-pkr.hcl .
 
-      - name: Publish to Packer Registry
-        run: |
-          packer registry publish -var "aws_region=us-east-1" \
-            -var "aws_access_key=$AWS_ACCESS_KEY" -var "aws_secret_key=$AWS_SECRET_KEY" \
-            --var-file=var.useast1-pkr.hcl
+      #- name: Publish to Packer Registry
+      #  run: |
+      #    packer registry publish -var "aws_region=us-east-1" \
+      #      -var "aws_access_key=$AWS_ACCESS_KEY" -var "aws_secret_key=$AWS_SECRET_KEY" \
+      #      --var-file=var.useast1-pkr.hcl
 
       
       
