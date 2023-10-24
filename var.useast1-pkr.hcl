@@ -1,7 +1,0 @@
-ami_id = "ami-053b0d53c279acc90"
-instance_type = "t2.micro"
-region  = "us-east-1"
-image_name  = "packer_linux_AWS"
-username = "ubuntu"
-os_version = "Ubuntu-22.04-LTS"
-version = "1.0.0"
