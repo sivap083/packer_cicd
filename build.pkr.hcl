@@ -47,13 +47,13 @@ This is an image for AWS Linux Machine.
   provisioner "shell" {
     scripts = ["script.sh"]
   }
-  post-processor "manifest" {
-    output     = "packer_manifest.json"
-    strip_path = true
-    custom_data = {
-      iteration_id = packer.iterationID
-    }
-  }
+  #post-processor "manifest" {
+  #  output     = "packer_manifest.json"
+  #  strip_path = true
+  #  custom_data = {
+  #    iteration_id = packer.iterationID
+  #  }
+  #}
 
   #post-processor "hcp" {
   #  channel = "development"

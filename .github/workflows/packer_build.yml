@@ -15,16 +15,13 @@ env:
   HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
   HCP_PROJECT_ID: ${{ secrets.HCP_PROJECT_ID }}
   HCP_ORGANIZATION_ID: ${{ secrets.HCP_ORGANIZATION_ID }}
-  HCP_BUCKET_NAME: "demo"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-image:
     name: Build
     runs-on: ubuntu-latest
-    outputs:
-      iteration_id: ${{ steps.hcp.outputs.iteration_id }}
-
+    
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout Repository
@@ -46,10 +43,10 @@ jobs:
       - name: Packer Build
         run: packer build --var-file=var.useast1-pkr.hcl .
    
-      - name: Get HCP Packer Iteration ID from Packer Manifest
-        id: hcp
-        run: |
-          last_run_uuid=$(jq -r '.last_run_uuid' "./packer_manifest.json")
-          build=$(jq -r '.builds[] | select(.packer_run_uuid == "'"$last_run_uuid"'")' "./packer_manifest.json")
-          iteration_id=$(echo "$build" | jq -r '.custom_data.iteration_id')
-          echo "iteration_id=$iteration_id" >> $GITHUB_OUTPUT
+      #- name: Get HCP Packer Iteration ID from Packer Manifest
+      #  id: hcp
+      #  run: |
+      #    last_run_uuid=$(jq -r '.last_run_uuid' "./packer_manifest.json")
+      #    build=$(jq -r '.builds[] | select(.packer_run_uuid == "'"$last_run_uuid"'")' "./packer_manifest.json")
+      #    iteration_id=$(echo "$build" | jq -r '.custom_data.iteration_id')
+      #    echo "iteration_id=$iteration_id" >> $GITHUB_OUTPUT
