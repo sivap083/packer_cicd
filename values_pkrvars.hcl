@@ -1,6 +1,6 @@
 primary_location    = "eastus"
 image_name          = "pkr-ubuntu"
-image_version       = "0.0.1"
+image_version       = "1.0.0"
 resource_group_name = "packer-demo"
 storage_account     = "packerdemo"
 

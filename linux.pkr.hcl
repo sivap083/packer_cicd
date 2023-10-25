@@ -6,7 +6,7 @@ source "azure-arm" "ubuntu" {
   //---------------------
   // Managed Image configuration will not need the storage account. It will store the image under resource group
   managed_image_resource_group_name = var.resource_group_name
-  managed_image_name                = "${var.image_name}-${var.image_version}_{{timestamp}}"
+  managed_image_name                = "${var.image_name}-${var.image_version}-{{timestamp}}"
   //---------------------
   os_type         = "Linux"
   image_publisher = "Canonical"
