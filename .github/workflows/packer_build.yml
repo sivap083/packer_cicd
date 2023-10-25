@@ -41,7 +41,7 @@ jobs:
         run: packer init .
 
       - name: Packer Validate
-        run: packer validate --var-file=values_pkrvars.hcl .
+        run: packer validate --var-file=values_pkrvars.hcl -var client_id=${{ secrets.AZURE_CLIENT_ID }} . 
         env:
           client_id: ${{ secrets.AZURE_CLIENT_ID }}
           client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
