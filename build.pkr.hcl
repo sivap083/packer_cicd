@@ -12,7 +12,7 @@ packer {
   }
 }
 
-source "amazon-ebs" "my_ubuntu_image" {
+source "amazon-ebs" "ubuntu_lts" {
   region        = "${var.region}"
   source_ami    = "${var.ami_id}"
   instance_type = "${var.instance_type}"
@@ -41,7 +41,7 @@ This is an image for AWS Linux Machine.
   }
 
   sources = [
-    "source.amazon-ebs.my_ubuntu_image",
+    "source.amazon-ebs.ubuntu_lts",
   ]
 
   provisioner "shell" {
