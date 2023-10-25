@@ -11,7 +11,7 @@ source "azure-arm" "ubuntu" {
   //---------------------
   os_type         = "Linux"
   image_publisher = "Canonical"
-  image_offer     = "UbuntuServer"
+  image_offer     = var.image_offer
   image_sku       = var.image_sku
 
   location = var.location
