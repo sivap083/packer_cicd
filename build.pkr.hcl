@@ -15,7 +15,7 @@ This is an image for hashicups app.
   sources = [
     "source.azure-arm.ubuntu"
   ]
-  
+
   # systemd unit for HashiCups service
   provisioner "file" {
     source      = "hashicups.service"
