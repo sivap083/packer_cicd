@@ -47,5 +47,5 @@ jobs:
       - name: Packer Validate
         run: packer validate --var-file=values_pkrvars.hcl -var client_id=${{ secrets.AZURE_CLIENT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} .
       
-      - name: Build with Packer
-        run: packer build --var-file=values_pkrvars.hcl .
+      - name: Packer Build
+        run: packer build --var-file=values_pkrvars.hcl -var client_id=${{ secrets.AZURE_CLIENT_ID }} -var client_secret=${{ secrets.AZURE_CLIENT_SECRET }} -var subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }} -var tenant_id=${{ secrets.AZURE_TENANT_ID }} .
