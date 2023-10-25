@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Build Packer Image
+name: Build & Upload to HCP
 
 # Controls when the workflow will run
 on:
@@ -11,39 +11,28 @@ on:
   #  branches: [ "master" ]
   workflow_dispatch:
 
+env:
+  HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
+  HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
+  HCP_PROJECT_ID: ${{ secrets.HCP_PROJECT_ID }}
+  HCP_ORGANIZATION_ID: ${{ secrets.HCP_ORGANIZATION_ID }}
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  build-image:
+    name: Build
     runs-on: ubuntu-latest
-    env:
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-        
-      - name: Set up Packer
-        uses: hashicorp/setup-packer@main
-        id: setup
-        with:
-          version: '1.8.3'
       
       - name: Set up Azure CLI
         run: |
           curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
           az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        env:
-          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Set Azure configuration for Packer
         run: |
@@ -55,6 +44,9 @@ jobs:
       - name: Packer Init
         run: packer init .
 
+      - name: Packer Validate
+        run: packer validate --var-file=values_pkrvars.hcl .
+      
       - name: Build with Packer
         run: packer build --var-file=values_pkrvars.hcl .
         
