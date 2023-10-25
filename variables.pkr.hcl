@@ -29,7 +29,7 @@ variable image_sku {
   type = string
 }
 
-variale image_offer {}
+variable image_offer {}
 variable capture_name_prefix {
   type = string
 }
