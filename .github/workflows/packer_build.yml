@@ -33,13 +33,6 @@ jobs:
           curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
           az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Set Azure configuration for Packer
-        run: |
-          echo "export ARM_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID" >> $GITHUB_ENV
-          echo "export ARM_TENANT_ID=$AZURE_TENANT_ID" >> $GITHUB_ENV
-          echo "export ARM_CLIENT_ID=$AZURE_CLIENT_ID" >> $GITHUB_ENV
-          echo "export ARM_CLIENT_SECRET=$AZURE_CLIENT_SECRET" >> $GITHUB_ENV
       
       - name: Packer Init
         run: packer init .
