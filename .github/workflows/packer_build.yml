@@ -15,7 +15,7 @@ env:
   HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
   HCP_PROJECT_ID: ${{ secrets.HCP_PROJECT_ID }}
   HCP_ORGANIZATION_ID: ${{ secrets.HCP_ORGANIZATION_ID }}
-  HCP_BUCKET_NAME: "packer-demo"
+  HCP_BUCKET_NAME: "demo"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
