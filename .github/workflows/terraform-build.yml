@@ -15,7 +15,7 @@ env:
   HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
   HCP_PROJECT_ID: ${{ secrets.HCP_PROJECT_ID }}
   HCP_ORGANIZATION_ID: ${{ secrets.HCP_ORGANIZATION_ID }}
-  HCP_BUCKET_NAME: "packer-aws"
+  HCP_BUCKET_NAME: "packer-azure"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -36,12 +36,10 @@ jobs:
       #- name: Setup Terraform
       #  uses: hashicorp/setup-terraform@v1
         
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - name: Set up Azure CLI
+        uses: azure/login@v1
         with:
-          aws-region: us-east-1
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       
       - name: Terraform Init
         run: terraform init
