@@ -8,8 +8,8 @@ on:
     branches: [ "feature/hcp-terraform" ]
   #pull_request:
   #  branches: [ "master" ]
-  workflow_dispatch:
-    
+  workflow_dispatch:      
+
 env:
   HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
   HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
@@ -19,7 +19,8 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
+  terraform:
+    name: "Terraform-AWS"
     runs-on: ubuntu-latest
     environment: development
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
