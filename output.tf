@@ -3,5 +3,5 @@ output "ubuntu_iteration" {
 }
 
 output "ubuntu_us_east_1" {
-  value = data.hcp_packer_image.ubuntu_us_east_1
+  value = data.hcp_packer_image.packer-azure
 }
