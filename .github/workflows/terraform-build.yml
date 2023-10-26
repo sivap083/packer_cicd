@@ -24,7 +24,7 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   terraform:
-    name: "Terraform"
+    name: "Terraform-Azure"
     runs-on: ubuntu-latest
     environment: development
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
