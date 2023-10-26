@@ -1,5 +1,5 @@
 
-name: Terraform-AWS
+name: Build & Upload to HCP
 
 # Controls when the workflow will run
 on:
@@ -19,8 +19,8 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  terraform:
-    name: "Terraform-AWS"
+  build-image:
+    name: "Build"
     runs-on: ubuntu-latest
     environment: development
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
