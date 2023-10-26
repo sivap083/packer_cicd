@@ -30,7 +30,7 @@ build {
   hcp_packer_registry {
     bucket_name = "packer-aws"
     description = <<EOT
-This is an image for AWS Linux Machine.
+This is an image for HashiCups application.
     EOT
     bucket_labels = {
       "owner"          = "platform-team"
@@ -44,8 +44,15 @@ This is an image for AWS Linux Machine.
     "source.amazon-ebs.ubuntu_lts",
   ]
 
+  # systemd unit for HashiCups service
+  provisioner "file" {
+    source      = "hashicups.service"
+    destination = "/tmp/hashicups.service"
+  }
+
+  # Set up HashiCups
   provisioner "shell" {
-    scripts = ["script.sh"]
+    scripts = ["setup-deps-hashicups.sh"]
   }
   #post-processor "manifest" {
   #  output     = "packer_manifest.json"
