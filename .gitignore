@@ -1,3 +1,6 @@
 terraform.tfstate
 .terraform/
 .terraform.lock.hcl
+packer_manifest.json
+packer_manifest.json.lock
+.vscode/
