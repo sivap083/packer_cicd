@@ -1,7 +1,7 @@
 ami_id = "ami-053b0d53c279acc90"
 instance_type = "t2.micro"
 region  = "us-east-1"
-image_name  = "packer_linux_AWS"
+image_name  = "packer-hashicups-app"
 username = "ubuntu"
 os_version = "Ubuntu-22.04-LTS"
 version = "2.0.0"
