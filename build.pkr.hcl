@@ -17,15 +17,15 @@ This is an image for hashicups app.
   ]
 
   # systemd unit for HashiCups service
-  provisioner "file" {
-    source      = "hashicups.service"
-    destination = "/tmp/hashicups.service"
-  }
+  #provisioner "file" {
+  #  source      = "hashicups.service"
+  #  destination = "/tmp/hashicups.service"
+  #}
 
-  # Set up HashiCups
+  # Set up Ngnix
   provisioner "shell" {
     scripts = [
-      "setup_hashicups.sh"
+      "script.sh"
     ]
   }
 
