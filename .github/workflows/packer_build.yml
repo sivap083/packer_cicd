@@ -1,0 +1,56 @@
+
+name: Build & Upload to HCP
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "feature/hcp-terraform" ]
+  #pull_request:
+  #  branches: [ "master" ]
+  workflow_dispatch:      
+
+env:
+  HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
+  HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
+  HCP_PROJECT_ID: ${{ secrets.HCP_PROJECT_ID }}
+  HCP_ORGANIZATION_ID: ${{ secrets.HCP_ORGANIZATION_ID }}
+  HCP_BUCKET_NAME: "packer-aws"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build-image:
+    name: "Build"
+    runs-on: ubuntu-latest
+    environment: development
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    # Checkout the repository to the GitHub Actions runner
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
+      #- name: Setup Terraform
+      #  uses: hashicorp/setup-terraform@v1
+        
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -input=true      
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=true
+
+      
+      
