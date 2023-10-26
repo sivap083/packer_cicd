@@ -1,20 +1,19 @@
-resource "azurerm_resource_group" "rg" {
-  location = var.region
-  name     = var.rg-name
+data "azurerm_resource_group" "rg" {
+  name = "packer-demo"
 }
 
 # Create virtual network
 resource "azurerm_virtual_network" "vnet" {
   name                = var.vnet_name
   address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
 }
 
 # Create subnet
 resource "azurerm_subnet" "subnet" {
   name                 = var.subnet_name
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.1.0/24"]
 }
@@ -22,16 +21,16 @@ resource "azurerm_subnet" "subnet" {
 # Create public IPs
 resource "azurerm_public_ip" "az_public_ip" {
   name                = var.az_public_ip_name
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
   allocation_method   = "Dynamic"
 }
 
 # Create Network Security Group and rule
 resource "azurerm_network_security_group" "az_nsg" {
   name                = var.az_nsg_name
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
 
   security_rule {
     name                       = "HTTP"
@@ -73,8 +72,8 @@ resource "azurerm_network_security_group" "az_nsg" {
 # Create network interface
 resource "azurerm_network_interface" "az_nic" {
   name                = var.az_nic_name
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
 
   ip_configuration {
     name                          = "pkr_nic_configuration"
@@ -99,8 +98,8 @@ resource "tls_private_key" "pkr_ssh" {
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "az_vm" {
   name                  = var.az_vm_name
-  location              = azurerm_resource_group.rg.location
-  resource_group_name   = azurerm_resource_group.rg.name
+  location              = data.azurerm_resource_group.rg.location
+  resource_group_name   = data.azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.az_nic.id]
   size                  = "Standard_DS1_v2"
   source_image_id       = data.hcp_packer_image.packer-azure.cloud_image_id
