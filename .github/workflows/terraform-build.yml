@@ -1,11 +1,11 @@
 
-name: Terraform
+name: Terraform-AWS
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
-  #push:
-  #  branches: [ "feature/hcp-terraform" ]
+  push:
+    branches: [ "feature/hcp-terraform" ]
   #pull_request:
   #  branches: [ "master" ]
   workflow_dispatch:
