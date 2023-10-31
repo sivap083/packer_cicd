@@ -61,11 +61,16 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan    
+        run: terraform plan
+      
+      - name: Create Manual Approval Request
+        id: manual-approval
+        run: echo "Manual approval required for Terraform ${{ github.event.inputs.action }}"
 
       - name: Perform Terraform Action
+        if: steps.manual-approval.outputs.result == 'approved'
         run: ${{ github.event.inputs.action }}
-        
+
       - name: Terraform Show
         run: terraform show
       
