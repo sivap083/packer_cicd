@@ -31,9 +31,9 @@ jobs:
   build-image:
     name: "Build"
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        action: ['apply', 'destroy']
+    #strategy:
+    #  matrix:
+    #    action: ['apply', 'destroy']
     environment: 'development'
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -61,8 +61,15 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out=tfplan    
 
-      - name: Terraform Action
-        run: terraform ${{ matrix.action }} -auto-approve
+      - name: Perform Terraform Action
+        run: |
+          if [ ${{ github.event.inputs.action }} == 'apply' ]; then
+            terraform apply -auto-approve
+          else
+            terraform destroy -auto-approve
+          fi
+        env:
+          TF_IN_AUTOMATION: true
                   
       - name: Terraform Show
         run: terraform show
