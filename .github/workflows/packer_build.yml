@@ -13,10 +13,7 @@ on:
       action:
         description: 'Terraform apply or destroy'
         required: true
-        default: 'apply'
-        options:
-          - 'apply'
-          - 'destroy'
+        
           
 
 env:
@@ -45,13 +42,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       
-      - name: Verify Input
-        run: |
-          if [[ "${{ github.event.inputs.action }}" != "apply" && "${{ github.event.inputs.action }}" != "destroy" ]]; then
-            echo "Invalid input: ${{ github.event.inputs.action }}. Please select 'apply' or 'destroy'."
-            exit 1
-          fi
-        shell: bash
+      #- name: Verify Input
+      #  run: |
+      #    if [[ "${{ github.event.inputs.action }}" != "apply" && "${{ github.event.inputs.action }}" != "destroy" ]]; then
+      #      echo "Invalid input: ${{ github.event.inputs.action }}. Please select 'apply' or 'destroy'."
+      #      exit 1
+      #    fi
+      #  shell: bash
         
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -67,15 +64,8 @@ jobs:
         run: terraform plan -out=tfplan    
 
       - name: Perform Terraform Action
-        run: |
-          if [ ${{ github.event.inputs.action }} == 'apply' ]; then
-            terraform apply -auto-approve
-          else
-            terraform destroy -auto-approve
-          fi
-        env:
-          TF_IN_AUTOMATION: true
-                  
+        run: ${{ github.event.inputs.action }}
+        
       - name: Terraform Show
         run: terraform show
       
