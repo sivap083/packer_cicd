@@ -4,11 +4,20 @@ name: Build & Upload to HCP
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
-  push:
-    branches: [ "feature/tf-modules" ]
+  #push:
+  #  branches: [ "feature/tf-modules" ]
   #pull_request:
   #  branches: [ "master" ]
-  workflow_dispatch:      
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Terraform apply or destroy'
+        required: true
+        default: 'apply'
+        options:
+          - 'apply'
+          - 'destroy'
+          
 
 env:
   HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
@@ -22,7 +31,10 @@ jobs:
   build-image:
     name: "Build"
     runs-on: ubuntu-latest
-    environment: development
+    strategy:
+      matrix:
+        action: ['apply', 'destroy']
+    environment: 'development'
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
@@ -49,8 +61,8 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out=tfplan    
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve -input=true
+      - name: Terraform Action
+        run: terraform ${{ matrix.action }} -auto-approve
                   
       - name: Terraform Show
         run: terraform show
