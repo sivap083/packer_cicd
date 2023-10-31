@@ -63,20 +63,19 @@ jobs:
       - name: Terraform Plan
         run: terraform plan
       
-      - name: Create Manual Approval Request
-        id: manual-approval
-        run: |
-          echo "##[set-output name=approval_required]true"
-          echo "Manual approval required for Terraform ${{ github.event.inputs.action }}"
+      #- name: Create Manual Approval Request
+      #  id: manual-approval
+      #  run: |
+      #    echo "##[set-output name=approval_required]true"
+      #    echo "Manual approval required for Terraform ${{ github.event.inputs.action }}"
 
       - name: Perform Terraform Action
-        if: steps.manual-approval.outputs.approval_required == 'true'
         run: ${{ github.event.inputs.action }}
       
       - name: Request Manual Approval
         if: steps.manual-approval.outputs.approval_required == 'true'
         run: echo "Manual approval requested for Terraform ${{ github.event.inputs.action }}"
-        
+
       - name: Terraform Show
         run: terraform show
       
