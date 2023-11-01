@@ -72,9 +72,9 @@ jobs:
       - name: Perform Terraform Action
         run: ${{ github.event.inputs.action }}
       
-      - name: Request Manual Approval
-        if: steps.manual-approval.outputs.approval_required == 'true'
-        run: echo "Manual approval requested for Terraform ${{ github.event.inputs.action }}"
+      #- name: Request Manual Approval
+      #  if: steps.manual-approval.outputs.approval_required == 'true'
+      #  run: echo "Manual approval requested for Terraform ${{ github.event.inputs.action }}"
 
       - name: Terraform Show
         run: terraform show
