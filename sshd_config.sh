@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo setenforce 0
+
 sudo sed -i 's/lock_passwd: true/lock_passwd: false/' /etc/cloud/cloud.cfg
 sudo sed -i 's/ssh_pwauth:   0/ssh_pwauth:   True/' /etc/cloud/cloud.cfg
 
