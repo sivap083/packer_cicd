@@ -12,7 +12,7 @@ packer {
   }
 }
 
-source "amazon-ebs" "ubuntu_lts" {
+source "amazon-ebs" "linux_lts" {
   region        = "${var.region}"
   source_ami    = "${var.ami_id}"
   instance_type = "${var.instance_type}"
@@ -30,30 +30,35 @@ build {
   hcp_packer_registry {
     bucket_name = "packer-aws"
     description = <<EOT
-This is an image for HashiCups application.
+This is an image for Amazon Linux 2.
     EOT
     bucket_labels = {
-      "owner"          = "platform-team"
-      "os"             = "Linux",
-      "ubuntu-version" = "22.04-LTS"
-      "app"            = "nginx"
+      "owner"          = "automation-team"
+      "os"             = "Amazon Linux 2",
+      #"ubuntu-version" = "22.04-LTS"
+      #"app"            = "nginx"
     }
   }
 
   sources = [
-    "source.amazon-ebs.ubuntu_lts",
+    "source.amazon-ebs.linux_lts",
   ]
 
   # systemd unit for HashiCups service
-  provisioner "file" {
-    source      = "hashicups.service"
-    destination = "/tmp/hashicups.service"
+  provisioner "shell" {
+    scripts = ["sshd_config.sh"]
   }
 
+  # systemd unit for HashiCups service
+  #provisioner "file" {
+  #  source      = "hashicups.service"
+  #  destination = "/tmp/hashicups.service"
+  #}
+
   # Set up HashiCups
-  provisioner "shell" {
-    scripts = ["setup-deps-hashicups.sh"]
-  }
+  #provisioner "shell" {
+  #  scripts = ["setup-deps-hashicups.sh"]
+  #}
   #post-processor "manifest" {
   #  output     = "packer_manifest.json"
   #  strip_path = true
