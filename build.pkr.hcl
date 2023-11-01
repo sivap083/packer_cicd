@@ -33,8 +33,8 @@ build {
 This is an image for Amazon Linux 2.
     EOT
     bucket_labels = {
-      "owner"          = "automation-team"
-      "os"             = "Amazon Linux 2",
+      "owner" = "automation-team"
+      "os"    = "Amazon Linux 2",
       #"ubuntu-version" = "22.04-LTS"
       #"app"            = "nginx"
     }

@@ -8,3 +8,4 @@ sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/s
 
 # Restart SSH service
 sudo systemctl restart sshd
+echo "restarted sshd service"
