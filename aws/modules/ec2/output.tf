@@ -5,3 +5,7 @@ output "ubuntu_iteration" {
 output "ubuntu_us_east_1" {
   value = data.hcp_packer_image.ubuntu_us_east_1
 }
+
+output "instance_id" {
+  value = aws_instance.app_server.id
+}
