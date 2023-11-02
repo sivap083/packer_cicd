@@ -30,11 +30,11 @@ build {
   hcp_packer_registry {
     bucket_name = "packer-aws"
     description = <<EOT
-This is an image for Amazon Linux 2.
+This is an image for Red Hat Enterprise Linux.
     EOT
     bucket_labels = {
       "owner" = "automation-team"
-      "os"    = "Amazon Linux 2",
+      "os"    = "RHEL",
       #"ubuntu-version" = "22.04-LTS"
       #"app"            = "nginx"
     }
