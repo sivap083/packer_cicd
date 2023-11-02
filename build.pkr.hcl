@@ -5,6 +5,11 @@ packer {
       version = "~> 1"
     }
 
+    vagrant = {
+      source  = "github.com/hashicorp/vagrant"
+      version = "~> 1"
+    }
+
     ansible = {
       source  = "github.com/hashicorp/ansible"
       version = "~> 1"
@@ -49,6 +54,13 @@ This is an image for Red Hat Enterprise Linux.
     scripts = ["sshd_config.sh"]
   }
 
+  # Install git
+  provisioner "shell" {
+    inline = [
+      "sudo yum update -y",
+      "sudo yum install -y git",
+    ]
+  }
   # systemd unit for HashiCups service
   #provisioner "file" {
   #  source      = "hashicups.service"
@@ -59,6 +71,12 @@ This is an image for Red Hat Enterprise Linux.
   provisioner "shell" {
     scripts = ["ansible-install.sh"]
   }
+
+  # Set up ufw
+  provisioner "shell" {
+    scripts = ["ufw.sh"]
+  }
+
   #post-processor "manifest" {
   #  output     = "packer_manifest.json"
   #  strip_path = true
@@ -67,7 +85,7 @@ This is an image for Red Hat Enterprise Linux.
   #  }
   #}
 
-  #post-processor "hcp" {
-  #  channel = "development"
-  #}
+  post-processor "vagrant" {
+    output = "my-vagrant-box.box"
+  }
 }
