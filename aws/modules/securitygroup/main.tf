@@ -15,4 +15,11 @@ resource "aws_security_group" "packer_sg" {
     protocol    = "tcp"
     cidr_blocks = [var.allowed_cidr]
   }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"  # All protocols
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
