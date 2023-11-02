@@ -34,7 +34,7 @@ This is an image for Red Hat Enterprise Linux.
     EOT
     bucket_labels = {
       "owner" = "automation-team"
-      "os"    = "Amazon Linux 2",
+      "os"    = "rhel",
       #"ubuntu-version" = "22.04-LTS"
       #"app"            = "nginx"
     }
