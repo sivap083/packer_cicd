@@ -55,10 +55,10 @@ This is an image for Red Hat Enterprise Linux.
   #  destination = "/tmp/hashicups.service"
   #}
 
-  # Set up HashiCups
-  #provisioner "shell" {
-  #  scripts = ["setup-deps-hashicups.sh"]
-  #}
+  # Set up ansible
+  provisioner "shell" {
+    scripts = ["ansible-install.sh"]
+  }
   #post-processor "manifest" {
   #  output     = "packer_manifest.json"
   #  strip_path = true
