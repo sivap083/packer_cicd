@@ -1,10 +1,6 @@
 #!/bin/bash
-set +e
-# Update the package repository and install EPEL repository
-sudo dnf install epel-release -y
-sudo dnf update -y
+sudo curl -O https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+sudo yum install epel-release-latest-8.noarch.rpm -y
 sudo yum update -y
-sudo yum makecache
+sudo yum install ansible -y
 
-# Install Ansible
-sudo dnf install ansible

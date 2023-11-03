@@ -72,11 +72,7 @@ This is an image for Red Hat Enterprise Linux.
     scripts = ["ansible-install.sh"]
   }
 
-  # Set up ufw
-  provisioner "shell" {
-    scripts = ["ufw.sh"]
-  }
-
+  
   #post-processor "manifest" {
   #  output     = "packer_manifest.json"
   #  strip_path = true
